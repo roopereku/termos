@@ -35,8 +35,9 @@ protected:
 	void renderAll() override;
 	void resizeChildren();
 
-private:
 	Widget* findMouseDestination(Point point) override;
+
+private:
 
 	void resize() override;
 

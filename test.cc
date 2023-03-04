@@ -1,5 +1,6 @@
 #include "termos/Termos.hh"
 #include "termos/Logger.hh"
+#include "termos/Debug.hh"
 
 int main()
 {
@@ -9,9 +10,8 @@ int main()
 	auto& right = ui.add <Termos::View> (Termos::Split::Vertically);
 
 	auto& ltest2 = left.add <Termos::Logger> ();
-
-	ltest2.add("bcd", 1);
-	ltest2.add("bcdjkdfjlk", 34);
+	auto& rtest2 = right.add <Termos::Logger> ();
+	Termos::setDebugLogger(ltest2);
 
 	ui.run();
 }

@@ -15,8 +15,6 @@ Widget::Widget()
 void Widget::render()
 {
 	renderSelf();
-	if(parent)
-		parent->render();
 }
 
 void Widget::renderSelf()
@@ -84,8 +82,8 @@ Widget* Widget::findMouseDestination(Point point)
 bool Widget::isMouseInside(Point point)
 {
 	// Is the given point inside the borders of this widget
-	return	point.x >= position.x && point.x <= position.x + size.x &&
-			point.y >= position.y && point.y <= position.y + size.y;
+	return	point.x > position.x && point.x < position.x + size.x &&
+			point.y > position.y && point.y < position.y + size.y;
 }
 
 void Widget::resize()
@@ -112,8 +110,8 @@ void Widget::resize()
 	if(previous)
 	{
 		position = Point(
-			previous->position.x + (horizontally ? previous->size.x : 0),
-			previous->position.y + (horizontally ? 0 : previous->size.y)
+			previous->position.x + (horizontally ? previous->size.x + 2 : 0),
+			previous->position.y + (horizontally ? 0 : previous->size.y + 1)
 		);
 	}
 

@@ -1,4 +1,5 @@
 #include "Termos.hh"
+#include "Debug.hh"
 
 TermosUI::TermosUI(Termos::Split direction) : View(direction)
 {
@@ -48,6 +49,17 @@ void TermosUI::run()
 				MEVENT mouse;
 				if(getmouse(&mouse) == OK)
 				{
+					Point at(mouse.x, mouse.y);
+					Widget* clickAt = findMouseDestination(at);
+
+					if(clickAt)
+					{
+						// Subtract the widget position to make the mouse start at 0 0
+						at.x -= clickAt->position.x;
+						at.y -= clickAt->position.y;
+
+						clickAt->onMouseClick(at);
+					}
 				}
 			}
 		}

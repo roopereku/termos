@@ -8,4 +8,9 @@ void Logger::onRender(Render& render)
 		render.text(0, i, logs[i].c_str());
 }
 
+void Logger::onMouseClick(Point at)
+{
+	add("Mouse clicked at", at.x, at.y);
+}
+
 }

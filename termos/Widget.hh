@@ -27,7 +27,9 @@ public:
 
 protected:
 	void render();
+
 	virtual void onRender(Render& render) {};
+	virtual void onMouseClick(Point at) {};
 
 	Sizef getSize();
 
