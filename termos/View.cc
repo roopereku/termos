@@ -48,12 +48,18 @@ Widget& View::addNextChild(const std::shared_ptr <Widget>& widget)
 {
 	// If the first child exists, add a next for it
 	if(firstChild)
-		return firstChild->addNext(widget, this);
+	{
+		Widget& ret = firstChild->addNext(widget, this);
+		renderAll();
+
+		return ret;
+	}
 
 	// Initialize the first child
 	firstChild = widget;
 	firstChild->init(this);
 
+	firstChild->render();
 	return *firstChild;
 }
 

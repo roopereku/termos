@@ -7,6 +7,9 @@ Render::Render(WINDOW* window, Widget& widget) : window(window)
 {
 	werase(window);
 	box(window, 0, 0);
+
+	if(widget.focused)
+		mvwprintw(window, 0, 3, "Focused");
 }
 
 Render::~Render()

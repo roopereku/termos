@@ -58,7 +58,17 @@ void TermosUI::run()
 						at.x -= clickAt->position.x;
 						at.y -= clickAt->position.y;
 
+						if(focused)
+						{
+							focused->focused = false;
+							focused->render();
+						}
+
+						focused = clickAt;
+						clickAt->focused = true;
 						clickAt->onMouseClick(at);
+
+						focused->render();
 					}
 				}
 			}

@@ -4,6 +4,7 @@
 #include <ncurses.h>
 
 namespace Termos {
+
 class Widget;
 class Render
 {

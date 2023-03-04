@@ -46,6 +46,7 @@ private:
 	Widget* findFirst();
 
 	WINDOW* window = nullptr;
+	bool focused = false;
 
 	Size maxSize;
 	Point position;

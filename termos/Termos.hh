@@ -1,6 +1,7 @@
 #ifndef TERMOS_HH
 #define TERMOS_HH
 
+#include "Widget.hh"
 #include "View.hh"
 
 class TermosUI : public Termos::View
@@ -12,6 +13,7 @@ public:
 	void run();
 
 private:
+	Widget* focused = nullptr;
 	WINDOW* root;
 };
 
