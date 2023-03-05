@@ -4,10 +4,13 @@
 TermosUI::TermosUI(Termos::Split direction) : View(direction)
 {
 	Termos::Widget::window = initscr();
-	size = Sizef(COLS, LINES);
+	size = Size(COLS, LINES);
 
 	// Hide the cursor
 	curs_set(0);
+
+	// Don't echo characters typed by the user
+	noecho();
 
 	// Enable arrow keys, resize events and mouse events
 	keypad(window, true);
@@ -34,7 +37,7 @@ void TermosUI::run()
 			// Did the window size change?
 			case KEY_RESIZE:
 			{
-				size = Sizef(COLS, LINES);
+				size = Size(COLS, LINES);
 
 				// Recursively resize all children and re-render them
 				resizeChildren();

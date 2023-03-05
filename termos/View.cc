@@ -16,6 +16,11 @@ size_t View::getWidgetCount()
 	return widgetCount;
 }
 
+bool View::isView()
+{
+	return true;
+}
+
 void View::renderAll()
 {
 	Widget::renderAll();

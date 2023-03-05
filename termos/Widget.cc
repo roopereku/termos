@@ -1,4 +1,5 @@
 #include "Widget.hh"
+#include "Debug.hh"
 #include "View.hh"
 
 #include <cmath>
@@ -34,9 +35,14 @@ void Widget::setMaximumSize(Size size)
 	maxSize = size;
 }
 
-Sizef Widget::getSize()
+Size Widget::getSize()
 {
 	return size;
+}
+
+bool Widget::isView()
+{
+	return false;
 }
 
 Widget& Widget::addNext(const std::shared_ptr <Widget>& widget, Widget* parent)
@@ -101,27 +107,21 @@ void Widget::resize()
 
 	/* Depending on the parent splitting direction, partition one of the
 	 * dimensions in a way that all of the widgets can fit in the parent view */
-	size = Sizef(
-		(float)view->size.x / (horizontally ? view->getWidgetCount() : 1) - 4,
-		(float)view->size.y / (horizontally ? 1 : view->getWidgetCount()) - 2
+	size = Size(
+		(float)view->size.x / (horizontally ? view->getWidgetCount() : 1) - 1,
+		(float)view->size.y / (horizontally ? 1 : view->getWidgetCount())
 	);
-
+	
 	// If there's a previous widget, use it as an offset
 	if(previous)
 	{
 		position = Point(
-			previous->position.x + (horizontally ? previous->size.x + 2 : 0),
-			previous->position.y + (horizontally ? 0 : previous->size.y + 1)
+			previous->position.x + (horizontally ? previous->size.x + 1 : 0),
+			previous->position.y + (horizontally ? 0 : previous->size.y)
 		);
 	}
 
-	else
-	{
-		position = Point(
-			parent->position.x + 2,
-			parent->position.y + 1
-		);
-	}
+	else position = parent->position;
 
 	// Move and resize the widget
 	mvwin(window, position.y, position.x);

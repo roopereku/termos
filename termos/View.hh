@@ -38,7 +38,7 @@ protected:
 	Widget* findMouseDestination(Point point) override;
 
 private:
-
+	bool isView() override;
 	void resize() override;
 
 	size_t widgetCount = 0;

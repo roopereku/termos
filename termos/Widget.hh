@@ -31,7 +31,7 @@ protected:
 	virtual void onRender(Render& render) {};
 	virtual void onMouseClick(Point at) {};
 
-	Sizef getSize();
+	Size getSize();
 
 private:
 	virtual void renderAll();
@@ -40,6 +40,7 @@ private:
 	virtual Widget* findMouseDestination(Point point);
 	bool isMouseInside(Point point);
 
+	virtual bool isView();
 	virtual void resize();
 	void init(Widget* parent);
 
@@ -50,7 +51,7 @@ private:
 
 	Size maxSize;
 	Point position;
-	Sizef size;
+	Size size;
 
 	Widget* parent = nullptr;
 	Widget* previous = nullptr;
