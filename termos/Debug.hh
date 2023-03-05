@@ -5,7 +5,7 @@
 
 #ifdef DEBUG
 #define DBG(...) __VA_ARGS__
-#define DBG_LOG(...) Termos::getDebugLogger().add(__VA_ARGS__)
+#define DBG_LOG(...) if(Termos::getDebugLogger()) Termos::getDebugLogger()->add(__VA_ARGS__)
 
 #else
 #define DBG(...)
@@ -16,7 +16,7 @@
 namespace Termos {
 
 void setDebugLogger(Logger& logger);
-Logger& getDebugLogger();
+DBG(Logger* getDebugLogger());
 
 }
 

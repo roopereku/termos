@@ -2,16 +2,16 @@
 
 namespace Termos {
 
-static Logger* debugLogger = nullptr;
+DBG(static Logger* debugLogger = nullptr);
 
 void setDebugLogger(Logger& logger)
 {
-	debugLogger = &logger;
+	DBG(debugLogger = &logger);
 }
 
-Logger& getDebugLogger()
+DBG(Logger* getDebugLogger()
 {
-	return *debugLogger;
-}
+	return debugLogger;
+})
 
 }

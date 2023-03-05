@@ -7,22 +7,11 @@ int main()
 {
 	TermosUI ui(Termos::Split::Horizontally);
 
-	auto& left = ui.add <Termos::View> (Termos::Split::Vertically);
-	auto& right = ui.add <Termos::View> (Termos::Split::Vertically);
-
-	auto& logger = left.add <Termos::Logger> ();
-
-	auto& addButton = right.add <Termos::Button> ("Add a new button");
-	addButton.onClick = [&right]()
-	{
-		static unsigned count = 0;
-		count++;
-
-		DBG_LOG("Adding button", count);
-		right.add <Termos::Button> ("Button" + std::to_string(count));
-	};
-
+	auto& logger = ui.add <Termos::Logger> ();
 	Termos::setDebugLogger(logger);
+
+	DBG_LOG("moi");
+	DBG_LOG("joona", "on", "homo");
 
 	ui.run();
 }
