@@ -1,7 +1,7 @@
 #ifndef TERMOS_RENDER_HH
 #define TERMOS_RENDER_HH
 
-#include <ncurses.h>
+#include <string>
 
 namespace Termos {
 
@@ -9,13 +9,20 @@ class Widget;
 class Render
 {
 public:
-	Render(WINDOW* window, Widget& widget);
 	~Render();
 
-	void text(unsigned x, unsigned y, const char* str);
+	void text(unsigned x, unsigned y, const char* str, unsigned maxLength = 0);
+	void text(unsigned x, unsigned y, const std::string& str, unsigned maxLength = 0);
+
+	void verticalLine(unsigned x, unsigned y, unsigned length);
+	void horizontalLine(unsigned x, unsigned y, unsigned length);
+
+	// Only Widget has access to the constructor
+	friend class Widget;
 
 private:
-	WINDOW* window;
+	Render(Widget* widget);
+	Widget* widget;
 };
 }
 

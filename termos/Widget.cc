@@ -20,7 +20,7 @@ void Widget::render()
 
 void Widget::renderSelf()
 {
-	Render render(window, *this);
+	Render render(this);
 	onRender(render);
 }
 
