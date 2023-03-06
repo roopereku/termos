@@ -5,6 +5,13 @@
 
 namespace Termos {
 
+enum class Color
+{
+	Red, Green, Blue,
+	Yellow, Purple, Cyan,
+	Black, White
+};
+
 class Widget;
 class Render
 {
@@ -16,6 +23,8 @@ public:
 
 	void verticalLine(unsigned x, unsigned y, unsigned length);
 	void horizontalLine(unsigned x, unsigned y, unsigned length);
+
+	void setColor(Color foreground, Color background);
 
 	// Only Widget has access to the constructor
 	friend class Widget;
