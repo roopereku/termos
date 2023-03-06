@@ -90,6 +90,11 @@ void Render::text(unsigned x, unsigned y, const char* str, unsigned maxLength)
 	else mvwprintw(widget->window, y + 1, x + 1, "%.*s", maxLength, str);
 }
 
+void Render::character(char ch, unsigned x, unsigned y)
+{
+	mvwprintw(widget->window, y + 1, x + 1, "%c", ch);
+}
+
 void Render::verticalLine(unsigned x, unsigned y, unsigned length)
 {
 	mvwvline(widget->window, y + 1, x + 1, 0, length);

@@ -21,6 +21,8 @@ public:
 	void text(unsigned x, unsigned y, const char* str, unsigned maxLength = 0);
 	void text(unsigned x, unsigned y, const std::string& str, unsigned maxLength = 0);
 
+	void character(char ch, unsigned x, unsigned y);
+
 	void verticalLine(unsigned x, unsigned y, unsigned length);
 	void horizontalLine(unsigned x, unsigned y, unsigned length);
 
