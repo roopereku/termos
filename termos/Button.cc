@@ -21,7 +21,7 @@ void Button::onRender(Render& render)
 		getSize().y / 2 - 1
 	);
 
-	render.text(middle.x, middle.y, text.c_str());
+	render.text(text.c_str(), middle.x, middle.y);
 }
 
 void Button::onMouseClick(Point)

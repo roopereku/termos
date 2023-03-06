@@ -18,8 +18,8 @@ class Render
 public:
 	~Render();
 
-	void text(unsigned x, unsigned y, const char* str, unsigned maxLength = 0);
-	void text(unsigned x, unsigned y, const std::string& str, unsigned maxLength = 0);
+	void text(const char* str, unsigned x, unsigned y, unsigned maxLength = 0);
+	void text(const std::string& str, unsigned x, unsigned y, unsigned maxLength = 0);
 
 	void character(char ch, unsigned x, unsigned y);
 

@@ -42,7 +42,7 @@ void Table::onRender(Render& render)
 			if(x > 0) render.verticalLine(lineX, lineY, 2);
 
 			// Render the text of each cell
-			render.text(lineX + 1, lineY + 1, rows[y].cells[x], partWidth);
+			render.text(rows[y].cells[x], lineX + 1, lineY + 1, partWidth);
 
 			lineX += partWidth + 1;
 		}

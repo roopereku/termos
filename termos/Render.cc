@@ -77,12 +77,12 @@ void Render::setColor(Color foreground, Color background)
 	wattron(widget->window, COLOR_PAIR(index));
 }
 
-void Render::text(unsigned x, unsigned y, const std::string& str, unsigned maxLength)
+void Render::text(const std::string& str, unsigned x, unsigned y, unsigned maxLength)
 {
-	text(x, y, str.c_str(), maxLength);
+	text(str.c_str(), x, y, maxLength);
 }
 
-void Render::text(unsigned x, unsigned y, const char* str, unsigned maxLength)
+void Render::text(const char* str, unsigned x, unsigned y, unsigned maxLength)
 {
 	if(maxLength == 0)
 		mvwprintw(widget->window, y + 1, x + 1, "%s", str);

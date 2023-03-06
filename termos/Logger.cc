@@ -5,7 +5,7 @@ namespace Termos {
 void Logger::onRender(Render& render)
 {
 	for(size_t i = 0; i < logs.size(); i++)
-		render.text(0, i, logs[i].c_str());
+		render.text(logs[i], 0, i);
 }
 
 void Logger::onMouseClick(Point at)
