@@ -4,6 +4,8 @@
 TermosUI::TermosUI(Termos::Split direction) : View(direction)
 {
 	Termos::Widget::window = initscr();
+	start_color();
+
 	size = Size(COLS, LINES);
 
 	// Hide the cursor
@@ -74,6 +76,14 @@ void TermosUI::run()
 						focused->render();
 					}
 				}
+
+				break;
+			}
+
+			default:
+			{
+				if(focused)
+					focused->onKeyPress(key);
 			}
 		}
 	}

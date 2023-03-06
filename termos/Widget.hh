@@ -30,6 +30,7 @@ protected:
 
 	virtual void onRender(Render& render) {};
 	virtual void onMouseClick(Point at) {};
+	virtual void onKeyPress(int key) {};
 
 	Size getSize();
 
