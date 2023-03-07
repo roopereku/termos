@@ -16,8 +16,6 @@ class Widget
 public:
 	Widget();
 
-	void setMaximumSize(Size size);
-
 	Widget& addNext(const std::shared_ptr <Widget>& widget, Widget* parent);
 
 	// Termos and View needs direct access to window
@@ -32,6 +30,7 @@ protected:
 	virtual void onMouseClick(Point at) {};
 	virtual void onKeyPress(int key) {};
 
+	void limitMaximumSize(unsigned limit);
 	Size getSize();
 
 private:
@@ -41,8 +40,13 @@ private:
 	virtual Widget* findMouseDestination(Point point);
 	bool isMouseInside(Point point);
 
-	virtual bool isView();
+	void getPartitionIncrement(unsigned& increment, unsigned& nonLimited, bool horizontally);
+	void adjustSizeAndPosition(unsigned partitionIncrement, bool horizontally);
+
 	virtual void resize();
+	void resize(Size partition, bool horizontally);
+
+	virtual bool isView();
 	void init(Widget* parent);
 
 	Widget* findFirst();
@@ -50,8 +54,9 @@ private:
 	WINDOW* window = nullptr;
 	bool focused = false;
 
-	Size maxSize;
 	Point position;
+
+	unsigned sizeLimit = 0;
 	Size size;
 
 	Widget* parent = nullptr;

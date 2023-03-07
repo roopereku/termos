@@ -5,10 +5,12 @@ namespace Termos {
 Button::Button(const std::string& textValue)
 {
 	text = textValue;
+	limitMaximumSize(3);
 }
 
 Button::Button()
 {
+	limitMaximumSize(3);
 }
 
 void Button::onRender(Render& render) 

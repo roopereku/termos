@@ -14,14 +14,16 @@ Render::Render(Widget* widget) : widget(widget)
 	if(!widget->isView())
 		box(widget->window, 0, 0);
 
-	mvwprintw(widget->window, 0, 1, "%d", widget->id);
+	//mvwprintw(widget->window, 0, 1, "%d", widget->id);
+	mvwprintw(widget->window, 0, 1, "%d %d", widget->position.x, widget->position.y);
 
-	if(widget->focused)
-		mvwprintw(widget->window, 0, 5, "Focused");
+	//if(widget->focused)
+	//	mvwprintw(widget->window, 0, 5, "Focused");
 }
 
 Render::~Render()
 {
+	wattroff(widget->window, A_BOLD);
 	wrefresh(widget->window);
 }
 
@@ -75,6 +77,9 @@ void Render::setColor(Color foreground, Color background)
 
 	// Activate the given color
 	wattron(widget->window, COLOR_PAIR(index));
+
+	if(widget->focused)
+		wattron(widget->window, A_BOLD);
 }
 
 void Render::text(const std::string& str, unsigned x, unsigned y, unsigned maxLength)

@@ -30,14 +30,20 @@ void Widget::renderAll()
 	renderSelf();
 }
 
-void Widget::setMaximumSize(Size size)
-{
-	maxSize = size;
-}
-
 Size Widget::getSize()
 {
 	return size;
+}
+
+void Widget::limitMaximumSize(unsigned limit)
+{
+	DBG_LOG("[", id, "] limit maximum size to", limit);
+
+	Widget* first = findFirst();
+	sizeLimit = limit + 2;
+
+	first->resize();
+	first->renderAll();
 }
 
 bool Widget::isView()
@@ -92,26 +98,49 @@ bool Widget::isMouseInside(Point point)
 			point.y > position.y && point.y < position.y + size.y;
 }
 
-void Widget::resize()
+void Widget::getPartitionIncrement(unsigned& increment, unsigned& nonLimited, bool horizontally)
 {
-	// The root window doesn't follow the same logic
-	if(!parent)
-		return;
+	if(sizeLimit)
+	{
+		unsigned diff = (horizontally ? size.x : size.y) - sizeLimit;
+		bool overflow = false;
 
-	// Create a window if one doesn't exist
-	if(!window)
-		window = newwin(1, 1, 1, 1);
+		if(horizontally)
+		{
+			if(size.x > sizeLimit)
+			{
+				size.x = sizeLimit;
+				overflow = true;
+			}
+		}
 
-	View* view = static_cast <View*> (parent);
-	bool horizontally = view->getSplitDirection() == Split::Horizontally;
+		else if(size.y > sizeLimit)
+		{
+			size.y = sizeLimit;
+			overflow = true;
+		}
 
-	/* Depending on the parent splitting direction, partition one of the
-	 * dimensions in a way that all of the widgets can fit in the parent view */
-	size = Size(
-		(float)view->size.x / (horizontally ? view->getWidgetCount() : 1) - 1,
-		(float)view->size.y / (horizontally ? 1 : view->getWidgetCount())
-	);
-	
+		if(overflow)
+			increment += diff;
+
+		else nonLimited++;
+	}
+
+	else nonLimited++;
+
+	if(next)
+		next->getPartitionIncrement(increment, nonLimited, horizontally);
+}
+
+void Widget::adjustSizeAndPosition(unsigned partitionIncrement, bool horizontally)
+{
+	// TODO A limited widget that hasn't reached it's max size could grow with the increment
+	if(!sizeLimit)
+	{
+		if(horizontally) size.x += partitionIncrement;
+		else size.y += partitionIncrement;
+	}
+
 	// If there's a previous widget, use it as an offset
 	if(previous)
 	{
@@ -127,8 +156,60 @@ void Widget::resize()
 	mvwin(window, position.y, position.x);
 	wresize(window, size.y, size.x);
 
+	if(next)
+		next->adjustSizeAndPosition(partitionIncrement, horizontally);
+}
+
+void Widget::resize()
+{
+	if(!parent)
+		return;
+
+	View* view = static_cast <View*> (parent);
+	bool horizontally = view->getSplitDirection() == Split::Horizontally;
+
+	/* Depending on the parent splitting direction, partition one of the
+	 * dimensions in a way that all of the widgets can fit in the parent view */
+	Size partition(
+		(float)view->size.x / (horizontally ? view->getWidgetCount() : 1) - 1,
+		(float)view->size.y / (horizontally ? 1 : view->getWidgetCount())
+	);
+
+	resize(partition, horizontally);
+}
+
+void Widget::resize(Size partition, bool horizontally)
+{
+	// Create a window if one doesn't exist
+	if(!window)
+		window = newwin(1, 1, 1, 1);
+
+	size = partition;
+
 	// Resize the next widget
 	if(next) next->resize();
+
+	// If there's no next, start processing positions and sizes
+	else
+	{
+		unsigned increment = 0;
+		unsigned nonLimited = 0;
+
+		// What's the first widget inside the current view?
+		Widget* first = findFirst();
+
+		// How much can non-limited widgets grow?
+		first->getPartitionIncrement(increment, nonLimited, horizontally);
+
+		// If non-limited widgets == 0, we get an FPU fault
+		if(nonLimited > 0)
+		{
+			// Split the increment with all of the non-limited widgets
+			increment = increment / nonLimited;
+		}
+
+		first->adjustSizeAndPosition(increment, horizontally);
+	}
 }
 
 }
