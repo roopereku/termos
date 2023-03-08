@@ -26,12 +26,22 @@ public:
 	void verticalLine(unsigned x, unsigned y, unsigned length);
 	void horizontalLine(unsigned x, unsigned y, unsigned length);
 
+	void invertColor();
+	void defaultColor();
+
 	void setColor(Color foreground, Color background);
+	void setForeground(Color foreground);
+	void setBackground(Color background);
 
 	// Only Widget has access to the constructor
 	friend class Widget;
 
 private:
+	void setColor();
+
+	Color fg;
+	Color bg;
+
 	Render(Widget* widget);
 	Widget* widget;
 };

@@ -9,13 +9,13 @@ namespace Termos {
 Render::Render(Widget* widget) : widget(widget)
 {
 	werase(widget->window);
-	setColor(Color::White, Color::Black);
+	defaultColor();
 
 	if(!widget->isView())
 		box(widget->window, 0, 0);
 
 	//mvwprintw(widget->window, 0, 1, "%d", widget->id);
-	mvwprintw(widget->window, 0, 1, "%d %d", widget->position.x, widget->position.y);
+	//mvwprintw(widget->window, 0, 1, "%d %d", widget->position.x, widget->position.y);
 
 	//if(widget->focused)
 	//	mvwprintw(widget->window, 0, 5, "Focused");
@@ -49,7 +49,38 @@ public:
 	}
 };
 
+void Render::setForeground(Color foreground)
+{
+	fg = foreground;
+	setColor();
+}
+
+void Render::setBackground(Color background)
+{
+	bg = background;
+	setColor();
+}
+
 void Render::setColor(Color foreground, Color background)
+{
+	fg = foreground;
+	bg = background;
+
+	setColor();
+}
+
+void Render::invertColor()
+{
+	std::swap(fg, bg);
+	setColor();
+}
+
+void Render::defaultColor()
+{
+	setColor(Color::White, Color::Black);
+}
+
+void Render::setColor()
 {
 	static short colors[]
 	{
@@ -61,7 +92,7 @@ void Render::setColor(Color foreground, Color background)
 	static std::unordered_map <ColorPair, int, colorPairHash> pairs;
 
 	// Find the given color pair from initialized colors
-	auto it = pairs.find(ColorPair(foreground, background));
+	auto it = pairs.find(ColorPair(fg, bg));
 	int index;
 
 	// The color pair doesn't exist
@@ -69,8 +100,8 @@ void Render::setColor(Color foreground, Color background)
 	{
 		// Create the given color pair
 		index = pairs.size() + 1;
-		init_pair(index, colors[static_cast <size_t> (foreground)], colors[static_cast <size_t> (background)]);
-		pairs[ColorPair(foreground, background)] = index;
+		init_pair(index, colors[static_cast <size_t> (fg)], colors[static_cast <size_t> (bg)]);
+		pairs[ColorPair(fg, bg)] = index;
 	}
 
 	else index = it->second;
