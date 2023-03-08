@@ -11,12 +11,15 @@ class EditableString
 public:
 	EditableString();
 
-	void onRender(Render& render, unsigned x, unsigned y);
+	EditableString& operator=(const std::string& str);
+
+	void onRender(Render& render, unsigned x, unsigned y, bool showCursor = true);
 	void onKeyPress(int ch);
 
 	operator const std::string&();
 
 private:
+	size_t maxVisible = 0;
 	size_t selected = 0;
 	std::string value;
 };

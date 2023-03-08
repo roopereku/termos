@@ -15,8 +15,12 @@ int main()
 	auto& view = ui.add <Termos::View> (Termos::Split::Vertically);
 	auto& button = view.add <Termos::Button> ("Button test");
 	auto& text = view.add <Termos::TextInput> ();
-	auto& text2 = view.add <Termos::TextInput> ();
-	auto& button2 = view.add <Termos::Button> ("Button test 2");
+
+	auto& table = view.add <Termos::Table> (5);
+	auto& row1 = table.addRow();
+	table.addRow();
+	table.addRow();
+	table.addRow();
 
 	//text.onSubmit = [&text](const std::string& value)
 	//{

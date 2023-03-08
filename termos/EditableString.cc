@@ -9,17 +9,29 @@ EditableString::EditableString()
 {
 }
 
-void EditableString::onRender(Render& render, unsigned x, unsigned y)
+EditableString& EditableString::operator=(const std::string& str)
+{
+	value = str;
+	selected = value.size();
+
+	return *this;
+}
+
+void EditableString::onRender(Render& render, unsigned x, unsigned y, bool showCursor)
 {
 	if(!value.empty())
 		render.text(value, x, y);
+
+	if(!showCursor)
+		return;
 
 	// If the character at the given position isn't defined yet, use a space
 	char selectedChar = selected == value.size() ? ' ' : value[selected];
 
 	// Re-render the selected character with a highlight
-	render.setColor(Color::Black, Color::White);
+	render.invertColor();
 	render.character(selectedChar, x + selected, y);
+	render.invertColor();
 }
 
 void EditableString::onKeyPress(int ch)

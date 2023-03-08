@@ -2,6 +2,7 @@
 #include "Debug.hh"
 
 #include <algorithm>
+#include <cmath>
 
 namespace Termos {
 
@@ -42,7 +43,8 @@ void Table::onRender(Render& render)
 			if(x > 0) render.verticalLine(lineX, lineY, 2);
 
 			// Render the text of each cell
-			render.text(rows[y].cells[x], lineX + 1, lineY + 1, partWidth);
+			bool showCursor = x == selected.x && y == selected.y;
+			rows[y].cells[x].onRender(render, lineX + 1, lineY + 1, showCursor);
 
 			lineX += partWidth + 1;
 		}
@@ -53,8 +55,28 @@ void Table::onRender(Render& render)
 	render.horizontalLine(0, lineY, getSize().x - 2);
 }
 
+void Table::onKeyPress(int key)
+{
+	if(selected.y >= rows.size())
+		return;
+
+	rows[selected.y].cells[selected.x].onKeyPress(key);
+	render();
+}
+
 void Table::onMouseClick(Point at)
 {
+	if(at.y % 2 == 1)
+	{
+		// Calculate the width of a single cell including borders
+		unsigned cellWidth = (getSize().x + columns) / columns;
+
+		// Transform the point into a coordinate
+		selected.x = at.x / cellWidth; 
+		selected.y = at.y / 2;
+
+		render();
+	}
 }
 
 void Table::set(TableRow& row, size_t index, const std::string& value)

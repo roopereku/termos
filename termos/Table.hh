@@ -2,6 +2,7 @@
 #define TERMOS_TABLE_HH
 
 #include "Widget.hh"
+#include "EditableString.hh"
 
 #include <string>
 #include <vector>
@@ -25,7 +26,7 @@ private:
 	void setCell(size_t index, const std::string& value);
 
 	Table* table;
-	std::vector <std::string> cells;
+	std::vector <EditableString> cells;
 };
 
 class Table : public Widget
@@ -35,12 +36,14 @@ public:
 
 	void onRender(Render& render) override;
 	void onMouseClick(Point at) override;
+	void onKeyPress(int key) override;
 
 	TableRow& addRow();
 	void set(TableRow& row, size_t index, const std::string& value);
 
 private:
 	size_t columns;
+	Point selected;
 
 	//std::vector <size_t> columnLongestValues;
 	std::vector <TableRow> rows;
