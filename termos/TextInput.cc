@@ -4,6 +4,7 @@ namespace Termos {
 
 TextInput::TextInput()
 {
+	limitMaximumSize(1);
 }
 
 void TextInput::onRender(Render& render)
