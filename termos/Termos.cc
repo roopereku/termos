@@ -60,8 +60,8 @@ void TermosUI::run()
 					if(clickAt)
 					{
 						// Subtract the widget position to make the mouse start at 0 0
-						at.x -= clickAt->position.x;
-						at.y -= clickAt->position.y;
+						at.x -= clickAt->position.x + 1;
+						at.y -= clickAt->position.y + 1;
 
 						if(focused)
 						{
