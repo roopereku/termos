@@ -37,6 +37,7 @@ public:
 	void onRender(Render& render) override;
 	void onMouseClick(Point at) override;
 	void onKeyPress(int key) override;
+	void onResize() override;
 
 	TableRow& addRow();
 	void set(TableRow& row, size_t index, const std::string& value);

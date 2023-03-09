@@ -29,6 +29,7 @@ protected:
 	virtual void onRender(Render& render) {};
 	virtual void onMouseClick(Point at) {};
 	virtual void onKeyPress(int key) {};
+	virtual void onResize() {};
 
 	void limitMaximumSize(unsigned limit);
 	Size getSize();

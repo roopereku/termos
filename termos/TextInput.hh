@@ -14,6 +14,7 @@ public:
 
 	void onRender(Render& render) override;
 	void onKeyPress(int key) override;
+	void onResize() override;
 
 	void clear();
 

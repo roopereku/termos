@@ -27,7 +27,7 @@ TableRow::TableRow(Table* table, size_t columns) : table(table), cells(columns)
 void Table::onRender(Render& render)
 {
 	unsigned lineY = 0;
-	unsigned partWidth = getSize().x / columns - 1;
+	unsigned cellWidth = getSize().x / columns - 1;
 
 	// Render each row
 	for(size_t y = 0; y < rows.size(); y++)
@@ -46,7 +46,7 @@ void Table::onRender(Render& render)
 			bool showCursor = x == selected.x && y == selected.y;
 			rows[y].cells[x].onRender(render, lineX + 1, lineY + 1, showCursor);
 
-			lineX += partWidth + 1;
+			lineX += cellWidth + 1;
 		}
 
 		lineY += 2;
@@ -62,6 +62,17 @@ void Table::onKeyPress(int key)
 
 	rows[selected.y].cells[selected.x].onKeyPress(key);
 	render();
+}
+
+void Table::onResize()
+{
+	unsigned cellWidth = getSize().x / columns - 1;
+
+	for(auto& row : rows)
+	{
+		for(auto& cell : row.cells)
+			cell.setMaximumVisible(cellWidth);
+	}
 }
 
 void Table::onMouseClick(Point at)

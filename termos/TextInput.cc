@@ -18,6 +18,11 @@ void TextInput::clear()
 	render();
 }
 
+void TextInput::onResize()
+{
+	value.setMaximumVisible(getSize().x);
+}
+
 void TextInput::onKeyPress(int key)
 {
 	// If the enter key was pressed, submit the value

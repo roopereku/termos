@@ -32,7 +32,10 @@ void Widget::renderAll()
 
 Size Widget::getSize()
 {
-	return size;
+	return Size(
+		size.x - 1,
+		size.y - 1
+	);
 }
 
 void Widget::limitMaximumSize(unsigned limit)
@@ -155,6 +158,8 @@ void Widget::adjustSizeAndPosition(unsigned partitionIncrement, bool horizontall
 	// Move and resize the widget
 	mvwin(window, position.y, position.x);
 	wresize(window, size.y, size.x);
+
+	onResize();
 
 	if(next)
 		next->adjustSizeAndPosition(partitionIncrement, horizontally);
