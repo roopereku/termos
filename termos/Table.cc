@@ -16,6 +16,10 @@ TableRow& Table::addRow()
 	DBG_LOG("Add row");
 	rows.push_back(TableRow(this, columns));
 
+	unsigned cellWidth = getSize().x / columns - 1;
+	for(auto& cell : rows.back().cells)
+		cell.setMaximumVisible(cellWidth);
+
 	render();
 	return rows.back();
 }
