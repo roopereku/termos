@@ -12,15 +12,17 @@ public:
 	EditableString();
 
 	EditableString& operator=(const std::string& str);
+	void setMaximumVisible(size_t value);
 
 	void onRender(Render& render, unsigned x, unsigned y, bool showCursor = true);
-	void onKeyPress(int ch);
+	void onKeyPress(int key);
 
 	operator const std::string&();
 
 private:
 	size_t maxVisible = 0;
 	size_t selected = 0;
+
 	std::string value;
 };
 }

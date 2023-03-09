@@ -17,20 +17,33 @@ EditableString& EditableString::operator=(const std::string& str)
 	return *this;
 }
 
+void EditableString::setMaximumVisible(size_t value)
+{
+	maxVisible = value;
+}
+
 void EditableString::onRender(Render& render, unsigned x, unsigned y, bool showCursor)
 {
+	size_t offset = 0;
+
+	if(maxVisible)
+	{
+		if(selected + 1 >= maxVisible)
+			offset = selected - maxVisible + 1;
+	}
+
 	if(!value.empty())
-		render.text(value, x, y);
+		render.text(value.c_str() + offset, x, y, maxVisible);
 
 	if(!showCursor)
 		return;
 
 	// If the character at the given position isn't defined yet, use a space
-	char selectedChar = selected == value.size() ? ' ' : value[selected];
+	auto selectedChar = selected == value.size() ? ' ' : value[selected];
 
 	// Re-render the selected character with a highlight
 	render.invertColor();
-	render.character(selectedChar, x + selected, y);
+	render.character(selectedChar, x + selected - offset, y);
 	render.invertColor();
 }
 
