@@ -3,6 +3,7 @@
 #include "Debug.hh"
 
 #include <unordered_map>
+#include <cstring>
 
 namespace Termos {
 
@@ -120,6 +121,10 @@ void Render::text(const std::string& str, unsigned x, unsigned y, unsigned maxLe
 
 void Render::text(const char* str, unsigned x, unsigned y, unsigned maxLength)
 {
+	size_t length = strlen(str);
+	if(length > maxLength && length >= widget->getSize().x)
+		maxLength = widget->getSize().x;
+
 	if(maxLength == 0)
 		mvwprintw(widget->window, y + 1, x + 1, "%s", str);
 

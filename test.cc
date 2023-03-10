@@ -14,14 +14,11 @@ int main()
 
 	auto& view = ui.add <Termos::View> (Termos::Split::Vertically);
 	auto& button = view.add <Termos::Button> ("Button test");
-	auto& addRow = view.add <Termos::Button> ("Add a new row");
 	auto& text = view.add <Termos::TextInput> ();
 
-	auto& table = view.add <Termos::Table> (5);
-
-	addRow.onClick = [&table]()
+	button.onClick = []()
 	{
-		table.addRow();
+		DBG_LOG("moi");
 	};
 
 	//text.onSubmit = [&text](const std::string& value)

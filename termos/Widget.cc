@@ -33,15 +33,13 @@ void Widget::renderAll()
 Size Widget::getSize()
 {
 	return Size(
-		size.x - 1,
-		size.y - 1
+		size.x - 2,
+		size.y - 2
 	);
 }
 
 void Widget::limitMaximumSize(unsigned limit)
 {
-	DBG_LOG("[", id, "] limit maximum size to", limit);
-
 	Widget* first = findFirst();
 	sizeLimit = limit + 2;
 

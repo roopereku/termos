@@ -4,13 +4,12 @@ namespace Termos {
 
 void Logger::onRender(Render& render)
 {
-	for(size_t i = 0; i < logs.size(); i++)
-		render.text(logs[i], 0, i);
-}
+	size_t i = 0;
+	if(logs.size() >= getSize().y)
+		i = logs.size() - getSize().y;
 
-void Logger::onMouseClick(Point at)
-{
-	add("Mouse clicked at", at.x, at.y);
+	for(size_t y = 0; i < logs.size() && y < getSize().y; i++, y++)
+		render.text(logs[i], 0, y);
 }
 
 }

@@ -14,7 +14,6 @@ public:
 	Logger() {}
 
 	void onRender(Render& render) override;
-	void onMouseClick(Point at) override;
 
 	template <typename T>
 	void add(const T& first)
