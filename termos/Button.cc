@@ -19,8 +19,8 @@ void Button::onRender(Render& render)
 		return;
 
 	Point middle(
-		getSize().x / 2 - text.length() + 1,
-		getSize().y / 2 - 1
+		getSize().x / 2 - text.length() / 2,
+		getSize().y / 2
 	);
 
 	render.text(text.c_str(), middle.x, middle.y);
