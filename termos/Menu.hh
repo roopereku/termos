@@ -4,11 +4,6 @@
 #include "Widget.hh"
 #include "menu/Submenu.hh"
 
-#include <functional>
-#include <vector>
-#include <memory>
-#include <string>
-
 namespace Termos {
 
 class Menu : public Widget, public Submenu
