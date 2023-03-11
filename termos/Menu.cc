@@ -47,17 +47,16 @@ MenuEntry* Submenu::findSelection(size_t& index)
 		if(index == menu->getSelectionIndex())
 			return entry.get();
 
+		index++;
+
 		if(entry->isSubmenu() && static_cast <Submenu&> (*entry).expanded)
 		{
 			// Recurse into this submenu
-			index++;
 			MenuEntry* ret = static_cast <Submenu&> (*entry).findSelection(index);
 
 			// If there was a return value, return it
 			if(ret) return ret;
 		}
-
-		else index++;
 	}
 	
 	return nullptr;
@@ -143,7 +142,7 @@ Menu::Menu() : Submenu("")
 {
 	MenuEntry::parent = nullptr;
 	menu = this;
-	expand();
+	expanded = true;
 }
 
 MenuEntry& Menu::getSelection()
@@ -161,21 +160,24 @@ void Submenu::onTrigger()
 	expanded = !expanded;
 }
 
-void Submenu::expand()
+bool Submenu::isSelectionHere()
 {
-	expanded = true;
-	menu->render();
+	for(auto& entry : entries)
+	{
+		if(entry.get() == menu->selected)
+			return true;
+
+		if(entry->isSubmenu() && static_cast <Submenu&> (*entry).isSubmenu())
+			return true;
+	}
+
+	return false;
 }
 
-void Submenu::collapse()
-{
-	expanded = false;
-	menu->render();
-}
-
-Submenu& Submenu::addMenu(const std::string& name)
+Submenu& Submenu::addMenu(const std::string& name, bool expanded)
 {
 	entries.push_back(std::make_shared <Submenu> (name));
+	static_cast <Submenu&> (*entries.back()).expanded = expanded;
 
 	static_cast <Submenu&> (*entries.back()).menu = menu;
 	static_cast <Submenu&> (*entries.back()).parent = this;
@@ -183,6 +185,18 @@ Submenu& Submenu::addMenu(const std::string& name)
 	// If this is the menu and it just got it's first entry, select said entry
 	if(this == menu && entries.size() == 1)
 		menu->selected = entries.back().get();
+
+	else
+	{
+		size_t index = 0;
+		MenuEntry* ret = menu->findSelection(index);
+
+		/* If the menu entry at selected index changed,
+		 * the new menu entry was added before the selected one.
+		 * In this case increment the selected index */
+		if(ret != menu->selected)
+			menu->selectedIndex++;
+	}
 
 	menu->render();
 

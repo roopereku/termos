@@ -24,8 +24,6 @@ public:
 	virtual void onTrigger() {};
 
 protected:
-	bool selected = false;
-
 	Submenu* parent;
 	Menu* menu;
 };
@@ -34,19 +32,17 @@ class Submenu : public MenuEntry
 {
 public:
 	Submenu(const std::string& name);
-	Submenu& addMenu(const std::string& name);
+	Submenu& addMenu(const std::string& name, bool expanded = false);
 	bool isSubmenu() override { return true; };
-
-	void expand();
-	void collapse();
 
 protected:
 	void onRender(Render& render, size_t x, size_t& y) override;
 	void onTrigger() override;
 
 	MenuEntry* findSelection(size_t& index);
+	bool isSelectionHere();
 
-	bool expanded = true;
+	bool expanded;
 
 private:
 	std::vector <std::shared_ptr <MenuEntry>> entries;
