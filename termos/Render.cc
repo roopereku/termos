@@ -136,6 +136,11 @@ void Render::character(char ch, unsigned x, unsigned y)
 	mvwprintw(widget->window, y + 1, x + 1, "%c", ch);
 }
 
+void Render::blankLine(unsigned y)
+{
+	mvwprintw(widget->window, y + 1, 1, "%*c", widget->getSize().x, ' ');
+}
+
 void Render::verticalLine(unsigned x, unsigned y, unsigned length)
 {
 	mvwvline(widget->window, y + 1, x + 1, 0, length);
