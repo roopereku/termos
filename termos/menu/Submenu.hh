@@ -2,6 +2,7 @@
 #define TERMOS_SUBMENU_HH
 
 #include "MenuEntry.hh"
+#include "MenuToggle.hh"
 
 #include <vector>
 #include <string>
@@ -22,7 +23,7 @@ public:
 	}
 
 	Submenu& addMenu(const std::string& name, bool expanded = false) { return add <Submenu> (name, expanded); }
-
+	MenuToggle& addToggle(const std::string& name, bool on = false) { return add <MenuToggle> (name, on); }
 
 protected:
 	void onRender(Render& render, size_t x, size_t& y) override;

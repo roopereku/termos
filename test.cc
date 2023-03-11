@@ -18,27 +18,12 @@ int main()
 	auto& addMenu = view.add <Termos::Button> ("Add a menu");
 
 	auto& test1 = menu.addMenu("test1");
-	auto& test1_1 = test1.addMenu("test1_1");
+	auto& toggle = test1.addToggle("Test toggle");
 
-	addMenu.onClick = [&test1]()
+	toggle.onToggle = [](bool on)
 	{
-		test1.addMenu("new menu");
+		DBG_LOG("Toggle", on ? "on" : "off");
 	};
-
-	auto& test1_1_1 = test1_1.addMenu("test1_1_1", true);
-	auto& test1_1_2 = test1_1.addMenu("test1_1_2");
-
-	auto& test1_1_1_1 = test1_1_1.addMenu("test1_1_1_1");
-	auto& test1_1_2_1 = test1_1_2.addMenu("test1_1_2_1");
-	auto& test1_1_2_2 = test1_1_2.addMenu("test1_1_2_2");
-
-	auto& test2 = menu.addMenu("test2");
-
-	//text.onSubmit = [&text](const std::string& value)
-	//{
-	//	DBG_LOG("User typed", value);
-	//	text.clear();
-	//};
 
 	ui.run();
 }
