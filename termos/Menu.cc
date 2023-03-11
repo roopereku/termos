@@ -2,6 +2,7 @@
 #include "Debug.hh"
 
 #include <algorithm>
+#include <cstring>
 
 namespace Termos {
 
@@ -21,11 +22,15 @@ void MenuEntry::onRender(Render& render, size_t x, size_t& y)
 		render.invertColor();
 		render.blankLine(y);
 
-		render.text(name, x, y++);
-		render.invertColor();
 	}
 
-	else render.text(name, x, y++);
+	const char* prefix = getPrefix();
+
+	render.text(prefix, x, y);
+	render.text(name, x + strlen(prefix), y++);
+
+	if(this == &menu->getSelection())
+		render.invertColor();
 }
 
 void Submenu::onRender(Render& render, size_t x, size_t& y)
@@ -134,13 +139,13 @@ MenuEntry::MenuEntry(const std::string& name) : name(name)
 {
 }
 
-Submenu::Submenu(const std::string& name) : MenuEntry(name)
+Submenu::Submenu(const std::string& name, bool expanded)
+	: MenuEntry(name), expanded(expanded)
 {
 }
 
 Menu::Menu() : Submenu("")
 {
-	MenuEntry::parent = nullptr;
 	menu = this;
 	expanded = true;
 }
@@ -153,6 +158,11 @@ MenuEntry& Menu::getSelection()
 size_t Menu::getSelectionIndex()
 {
 	return selectedIndex;
+}
+
+const char* Submenu::getPrefix()
+{
+	return expanded ? ". " : "> ";
 }
 
 void Submenu::onTrigger()
@@ -174,13 +184,9 @@ bool Submenu::isSelectionHere()
 	return false;
 }
 
-Submenu& Submenu::addMenu(const std::string& name, bool expanded)
+void Submenu::prepareEntry()
 {
-	entries.push_back(std::make_shared <Submenu> (name));
-	static_cast <Submenu&> (*entries.back()).expanded = expanded;
-
-	static_cast <Submenu&> (*entries.back()).menu = menu;
-	static_cast <Submenu&> (*entries.back()).parent = this;
+	entries.back()->menu = menu;
 
 	// If this is the menu and it just got it's first entry, select said entry
 	if(this == menu && entries.size() == 1)
@@ -200,7 +206,6 @@ Submenu& Submenu::addMenu(const std::string& name, bool expanded)
 
 	menu->render();
 
-	return static_cast <Submenu&> (*entries.back());
 }
 
 }
