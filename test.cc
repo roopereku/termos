@@ -1,3 +1,4 @@
+#include <termos/TabSelector.hh>
 #include <termos/TextInput.hh>
 #include <termos/Termos.hh>
 #include <termos/Logger.hh>
@@ -14,17 +15,11 @@ int main()
 	Termos::setDebugLogger(logger);
 
 	auto& view = ui.add <Termos::View> (Termos::Split::Vertically);
-	auto& menu = ui.add <Termos::Menu> ();
-	menu.addToggle("Onko santeri gay", true);
+	auto& tabs = view.add <Termos::TabSelector> ();
 
-	auto& toggle = view.add <Termos::Button> ("Toggle visibility");
-	toggle.onClick = [&menu]()
-	{
-		static bool visible = false;
-		menu.setVisible(visible);
-
-		visible = !visible;
-	};
+	tabs.add("moi");
+	tabs.add("test");
+	tabs.add("jfgdkl");
 
 	ui.run();
 }
