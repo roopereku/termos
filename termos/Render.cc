@@ -1,6 +1,6 @@
-#include "Render.hh"
-#include "Widget.hh"
-#include "Debug.hh"
+#include <termos/Render.hh>
+#include <termos/Widget.hh>
+#include <termos/Debug.hh>
 
 #include <unordered_map>
 #include <cstring>

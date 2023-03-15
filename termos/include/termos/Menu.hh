@@ -2,7 +2,7 @@
 #define TERMOS_MENU_HH
 
 #include "Widget.hh"
-#include "menu/Submenu.hh"
+#include "Submenu.hh"
 
 namespace Termos {
 

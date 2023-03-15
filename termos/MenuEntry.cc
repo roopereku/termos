@@ -1,5 +1,5 @@
-#include "MenuEntry.hh"
-#include "../Menu.hh"
+#include <termos/MenuEntry.hh>
+#include <termos/Menu.hh>
 
 #include <cstring>
 

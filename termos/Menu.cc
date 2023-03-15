@@ -1,5 +1,5 @@
-#include "../Menu.hh"
-#include "../Debug.hh"
+#include <termos/Menu.hh>
+#include <termos/Debug.hh>
 
 #include <algorithm>
 #include <cstring>

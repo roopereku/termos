@@ -1,10 +1,10 @@
-#include "termos/TextInput.hh"
-#include "termos/Termos.hh"
-#include "termos/Logger.hh"
-#include "termos/Button.hh"
-#include "termos/Table.hh"
-#include "termos/Debug.hh"
-#include "termos/Menu.hh"
+#include <termos/TextInput.hh>
+#include <termos/Termos.hh>
+#include <termos/Logger.hh>
+#include <termos/Button.hh>
+#include <termos/Table.hh>
+#include <termos/Debug.hh>
+#include <termos/Menu.hh>
 
 int main()
 {

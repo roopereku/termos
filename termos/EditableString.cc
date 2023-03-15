@@ -1,5 +1,5 @@
-#include "EditableString.hh"
-#include "Debug.hh"
+#include <termos/EditableString.hh>
+#include <termos/Debug.hh>
 
 #include <ncurses.h>
 

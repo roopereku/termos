@@ -1,6 +1,6 @@
-#include "Widget.hh"
-#include "Debug.hh"
-#include "View.hh"
+#include <termos/Widget.hh>
+#include <termos/Debug.hh>
+#include <termos/View.hh>
 
 #include <cmath>
 

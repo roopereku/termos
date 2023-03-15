@@ -1,5 +1,5 @@
-#include "Table.hh"
-#include "Debug.hh"
+#include <termos/Table.hh>
+#include <termos/Debug.hh>
 
 #include <algorithm>
 #include <cmath>

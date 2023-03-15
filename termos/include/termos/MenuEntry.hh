@@ -1,7 +1,7 @@
 #ifndef TERMOS_MENU_ENTRY_HH
 #define TERMOS_MENU_ENTRY_HH
 
-#include "../Widget.hh"
+#include "Widget.hh"
 
 namespace Termos {
 

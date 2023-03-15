@@ -1,4 +1,4 @@
-#include "TextInput.hh"
+#include <termos/TextInput.hh>
 
 namespace Termos {
 

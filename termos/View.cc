@@ -1,4 +1,4 @@
-#include "View.hh"
+#include <termos/View.hh>
 
 namespace Termos {
 

@@ -1,4 +1,4 @@
-#include "MenuToggle.hh"
+#include <termos/MenuToggle.hh>
 
 namespace Termos {
 

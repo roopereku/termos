@@ -1,4 +1,4 @@
-#include "Button.hh"
+#include <termos/Button.hh>
 
 namespace Termos {
 

@@ -1,4 +1,4 @@
-#include "Debug.hh"
+#include <termos/Debug.hh>
 
 namespace Termos {
 

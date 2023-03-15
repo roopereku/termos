@@ -1,5 +1,5 @@
-#include "Submenu.hh"
-#include "../Menu.hh"
+#include <termos/Submenu.hh>
+#include <termos/Menu.hh>
 
 namespace Termos {
 

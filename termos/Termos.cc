@@ -1,5 +1,5 @@
-#include "Termos.hh"
-#include "Debug.hh"
+#include <termos/Termos.hh>
+#include <termos/Debug.hh>
 
 TermosUI::TermosUI(Termos::Split direction) : View(direction)
 {
