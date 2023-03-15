@@ -20,6 +20,13 @@ void Widget::render()
 
 void Widget::renderSelf()
 {
+	if(!visible)
+	{
+		werase(window);
+		wrefresh(window);
+		return;
+	}
+
 	Render render(this);
 	onRender(render);
 }
@@ -73,6 +80,31 @@ Widget* Widget::findFirst()
 		return this;
 
 	return previous->findFirst();
+}
+
+void Widget::setVisible(bool visible)
+{
+	// Don't repeat visibility sets
+	if(visible == this->visible)
+		return;
+
+	// Adjust the widget count depending on if a widget is being hidden or not
+	static_cast <View*> (parent)->widgetCount += (visible ? +1 : -1);
+	this->visible = visible;
+
+	// Adjust the other widgets inside this view
+	static_cast <View*> (parent)->resizeChildren();
+	static_cast <View*> (parent)->renderAll();
+}
+
+void Widget::show()
+{
+	setVisible(true);
+}
+
+void Widget::hide()
+{
+	setVisible(false);
 }
 
 void Widget::init(Widget* parent)

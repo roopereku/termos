@@ -11,12 +11,18 @@
 class TermosUI;
 
 namespace Termos {
+class View;
+
 class Widget
 {
 public:
 	Widget();
 
 	Widget& addNext(const std::shared_ptr <Widget>& widget, Widget* parent);
+
+	void setVisible(bool visible);
+	void show();
+	void hide();
 
 	// Termos and View needs direct access to window
 	friend class ::TermosUI;
@@ -56,6 +62,7 @@ private:
 	bool focused = false;
 
 	Point position;
+	bool visible = true;
 
 	unsigned sizeLimit = 0;
 	Size size;

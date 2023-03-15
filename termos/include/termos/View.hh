@@ -17,7 +17,6 @@ enum class Split
 class View : public Widget
 {
 public:
-	
 	View(Split direction);
 
 	Split getSplitDirection();
@@ -30,6 +29,8 @@ public:
 		widgetCount++;
 		return static_cast <T&> (addNextChild(ptr));
 	}
+
+	friend class Widget;
 
 protected:
 	void renderAll() override;
