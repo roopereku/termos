@@ -38,6 +38,7 @@ protected:
 
 	Widget* findMouseDestination(Point point) override;
 	Widget& addNextChild(const std::shared_ptr <Widget>& widget);
+	Widget* findChild(size_t index);
 
 private:
 	bool isView() override;

@@ -1,4 +1,5 @@
 #include <termos/View.hh>
+#include <termos/Debug.hh>
 
 namespace Termos {
 
@@ -19,6 +20,25 @@ size_t View::getWidgetCount()
 bool View::isView()
 {
 	return true;
+}
+
+Widget* View::findChild(size_t index)
+{
+	if(!firstChild)
+		return nullptr;
+
+	auto current = firstChild;
+
+	while(current->next && index > 0)
+	{
+		current = current->next;
+		index--;
+	}
+
+	if(index > 0)
+		return nullptr;
+
+	return current.get();
 }
 
 void View::renderAll()
