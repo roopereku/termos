@@ -16,6 +16,9 @@ void TabSelector::add(const std::string& name)
 
 void TabSelector::onMouseClick(Point at)
 {
+	if(tabs.empty())
+		return;
+
 	size_t oldSelected = selected;
 
 	unsigned partWidth = (getSize().x - 1) / tabs.size(); 
