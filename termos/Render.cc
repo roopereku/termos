@@ -13,10 +13,10 @@ Render::Render(Widget* widget) : widget(widget)
 	defaultColor();
 
 	if(!widget->isView())
+	{
 		box(widget->window, 0, 0);
-
-	//mvwprintw(widget->window, 0, 1, "%d", widget->id);
-	//mvwprintw(widget->window, 0, 1, "%d %d", widget->position.x, widget->position.y);
+		//mvwprintw(widget->window, widget->getSize().y + 1, 1, "id %d x %d y %d", widget->id, widget->position.x, widget->position.y);
+	}
 
 	//if(widget->focused)
 	//	mvwprintw(widget->window, 0, 5, "Focused");

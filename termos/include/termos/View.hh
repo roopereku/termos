@@ -37,6 +37,7 @@ protected:
 	void resizeChildren();
 
 	Widget* findMouseDestination(Point point) override;
+	Widget& addNextChild(const std::shared_ptr <Widget>& widget);
 
 private:
 	bool isView() override;
@@ -45,7 +46,6 @@ private:
 	size_t widgetCount = 0;
 	Split direction;
 
-	Widget& addNextChild(const std::shared_ptr <Widget>& widget);
 	std::shared_ptr <Widget> firstChild;
 };
 }

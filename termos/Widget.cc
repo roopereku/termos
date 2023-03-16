@@ -21,11 +21,7 @@ void Widget::render()
 void Widget::renderSelf()
 {
 	if(!visible)
-	{
-		werase(window);
-		wrefresh(window);
 		return;
-	}
 
 	Render render(this);
 	onRender(render);
@@ -92,6 +88,8 @@ void Widget::setVisible(bool visible)
 	static_cast <View*> (parent)->widgetCount += (visible ? +1 : -1);
 	this->visible = visible;
 
+	static_cast <View*> (parent)->renderSelf();
+
 	// Adjust the other widgets inside this view
 	static_cast <View*> (parent)->resizeChildren();
 	static_cast <View*> (parent)->renderAll();
@@ -133,33 +131,42 @@ bool Widget::isMouseInside(Point point)
 
 void Widget::getPartitionIncrement(unsigned& increment, unsigned& nonLimited, bool horizontally)
 {
-	if(sizeLimit)
+	// If the widget is visible, handle possible limited size
+	if(visible)
 	{
-		unsigned diff = (horizontally ? size.x : size.y) - sizeLimit;
-		bool overflow = false;
-
-		if(horizontally)
+		// Is there a size limit?
+		if(sizeLimit)
 		{
-			if(size.x > sizeLimit)
+			// Calculate a difference between the size of one widget and the size limit
+			unsigned diff = (horizontally ? size.x : size.y) - sizeLimit;
+			bool overflow = false;
+
+			// Clamp the size horizontally
+			if(horizontally)
 			{
-				size.x = sizeLimit;
+				if(size.x > sizeLimit)
+				{
+					size.x = sizeLimit;
+					overflow = true;
+				}
+			}
+
+			// Clamp the size vertically
+			else if(size.y > sizeLimit)
+			{
+				size.y = sizeLimit;
 				overflow = true;
 			}
-		}
 
-		else if(size.y > sizeLimit)
-		{
-			size.y = sizeLimit;
-			overflow = true;
-		}
+			// If there was overflow, give additional space for other widgets
+			if(overflow)
+				increment += diff;
 
-		if(overflow)
-			increment += diff;
+			else nonLimited++;
+		}
 
 		else nonLimited++;
 	}
-
-	else nonLimited++;
 
 	if(next)
 		next->getPartitionIncrement(increment, nonLimited, horizontally);
@@ -168,7 +175,7 @@ void Widget::getPartitionIncrement(unsigned& increment, unsigned& nonLimited, bo
 void Widget::adjustSizeAndPosition(unsigned partitionIncrement, bool horizontally)
 {
 	// TODO A limited widget that hasn't reached it's max size could grow with the increment
-	if(!sizeLimit)
+	if(visible && !sizeLimit)
 	{
 		if(horizontally) size.x += partitionIncrement;
 		else size.y += partitionIncrement;
@@ -177,17 +184,23 @@ void Widget::adjustSizeAndPosition(unsigned partitionIncrement, bool horizontall
 	// If there's a previous widget, use it as an offset
 	if(previous)
 	{
-		position = Point(
-			previous->position.x + (horizontally ? previous->size.x + 1 : 0),
-			previous->position.y + (horizontally ? 0 : previous->size.y)
-		);
+		// If the previous widget is visible, take it's size into account
+		if(previous->visible)
+		{
+			position = Point(
+				previous->position.x + (horizontally ? previous->size.x + 1 : 0),
+				previous->position.y + (horizontally ? 0 : previous->size.y)
+			);
+		}
+
+		else position = previous->position;
 	}
 
 	else position = parent->position;
 
 	// Move and resize the widget
-	mvwin(window, position.y, position.x);
 	wresize(window, size.y, size.x);
+	mvwin(window, position.y, position.x);
 
 	onResize();
 
@@ -219,7 +232,10 @@ void Widget::resize(Size partition, bool horizontally)
 	if(!window)
 		window = newwin(1, 1, 1, 1);
 
-	size = partition;
+	if(visible)
+		size = partition;
+
+	else size = Size(0, 0);
 
 	// Resize the next widget
 	if(next) next->resize();
