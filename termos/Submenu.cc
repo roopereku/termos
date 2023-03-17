@@ -35,6 +35,8 @@ bool Submenu::isSelectionHere()
 void Submenu::prepareEntry()
 {
 	entries.back()->menu = menu;
+	entries.back()->parent = this;
+	entries.back()->depth = depth + 1;
 
 	// If this is the menu and it just got it's first entry, select said entry
 	if(this == menu && entries.size() == 1)

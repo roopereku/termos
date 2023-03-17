@@ -13,15 +13,19 @@ class MenuEntry
 public:
 	MenuEntry(const std::string& name);
 
-	friend class Submenu;
-
 	virtual void onTrigger()=0;
 	virtual bool isSubmenu() { return false; };
+
+	Submenu* findParent(int depth);
+
+	friend class Submenu;
 
 protected:
 	virtual const char* getPrefix()=0;
 
+	Submenu* parent;
 	Menu* menu;
+	int depth;
 
 private:
 	const std::string name;

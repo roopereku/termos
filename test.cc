@@ -17,12 +17,24 @@ int main()
 	auto& tabs = ui.add <Termos::TabbedView> (); 
 
 	auto& menu = tabs.tab <Termos::Menu> ("test1");
-	auto& toggle1 = menu.addToggle("test toggle");
-	auto& toggle2 = menu.addToggle("toggle test");
+	auto& menu1 = menu.addMenu("test menu 1");
+	auto& toggle1_1 = menu1.addToggle("(1) inside 1");
+	auto& toggle1_2 = menu1.addToggle("(2) inside 1");
 
-	menu.onSelect = [](Termos::MenuEntry& entry)
+	auto& menu2 = menu.addMenu("test menu 2");
+
+	DBG_LOG("menu1", &menu1);
+	DBG_LOG("menu2", &menu2);
+
+	menu.onSelect = [&menu1, &menu2](Termos::MenuEntry& entry)
 	{
-		DBG_LOG("Select", &entry);
+		auto* relative = entry.findParent(0);
+
+		if(relative == &menu1)
+			DBG_LOG("Inside menu1");
+
+		if(relative == &menu2)
+			DBG_LOG("Inside menu2");
 	};
 
 	ui.run();

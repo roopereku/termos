@@ -89,8 +89,12 @@ void Menu::onKeyPress(int key)
 
 Menu::Menu() : Submenu("")
 {
+	depth = -1;
 	menu = this;
 	expanded = true;
+	MenuEntry::parent = nullptr;
+
+	DBG_LOG("menu this", this);
 }
 
 MenuEntry& Menu::getSelection()
