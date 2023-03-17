@@ -4,6 +4,8 @@
 #include "Widget.hh"
 #include "Submenu.hh"
 
+#include <functional>
+
 namespace Termos {
 
 class Menu : public Widget, public Submenu
@@ -17,6 +19,8 @@ public:
 
 	MenuEntry& getSelection();
 	size_t getSelectionIndex();
+
+	std::function <void(MenuEntry&)> onSelect;
 
 	friend class Submenu;
 

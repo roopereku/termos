@@ -51,6 +51,9 @@ void Menu::onKeyPress(int key)
 				selected = previousSelection;
 			}
 
+			else if(onSelect)
+				onSelect(*selected);
+
 			break;
 		}
 
@@ -59,6 +62,7 @@ void Menu::onKeyPress(int key)
 			selectedIndex--;
 			selected = findSelection(index);
 
+
 			// We've hit the first menu entry if selected is null
 			// TODO Wrap around
 			if(!selected)
@@ -66,6 +70,9 @@ void Menu::onKeyPress(int key)
 				selectedIndex++;
 				selected = previousSelection;
 			}
+
+			else if(onSelect)
+				onSelect(*selected);
 
 			break;
 		}

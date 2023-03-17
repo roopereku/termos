@@ -18,9 +18,12 @@ int main()
 
 	auto& menu = tabs.tab <Termos::Menu> ("test1");
 	auto& toggle1 = menu.addToggle("test toggle");
+	auto& toggle2 = menu.addToggle("toggle test");
 
-	auto& menu2 = tabs.tab <Termos::Menu> ("test2");
-	auto& toggle2 = menu2.addToggle("toggle test");
+	menu.onSelect = [](Termos::MenuEntry& entry)
+	{
+		DBG_LOG("Select", &entry);
+	};
 
 	ui.run();
 }
