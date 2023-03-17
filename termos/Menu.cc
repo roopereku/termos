@@ -25,6 +25,9 @@ void Menu::onMouseClick(Point at)
 	{
 		selected = ret;
 		render();
+
+		if(onSelect)
+			onSelect(*selected);
 	}
 
 	// If nothing was clicked, revert back to the old index
