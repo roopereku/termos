@@ -18,8 +18,11 @@ int main()
 
 	auto& menu = tabs.tab <Termos::Menu> ("test1");
 	auto& menu1 = menu.addMenu("test menu 1");
-	auto& toggle1_1 = menu1.addToggle("(1) inside 1");
-	auto& toggle1_2 = menu1.addToggle("(2) inside 1");
+	auto& toggle1_1 = menu1.addToggle("(t1) inside 1");
+	auto& menu1_1 = menu1.addMenu("(m1) inside 1");
+	auto& toggle1_2 = menu1.addToggle("(t2) inside 1");
+
+	auto& toggle1_1_1 = menu1_1.addToggle("(t1) inside 1_1");
 
 	auto& menu2 = menu.addMenu("test menu 2");
 

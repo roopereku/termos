@@ -12,12 +12,17 @@ MenuEntry::MenuEntry(const std::string& name) : name(name)
 
 Submenu* MenuEntry::findParent(int depth)
 {
+	/* The given depth will not be found if it is greater than the
+	 * depth of this MenuEntry since the depth only gets smaller */
+	if(depth > this->depth)
+		return nullptr;
+
 	// If the depth matches, the callee is inside this submenu
 	if(this->depth == depth && isSubmenu())
 		return static_cast <Submenu*> (this);
 
-	// While the depth is >= 0, recursively look for the given parent
-	return depth >= 0 ? parent->findParent(depth) : nullptr;
+	// While there is a parent, recursively look for the given parent
+	return parent ? parent->findParent(depth) : nullptr;
 }
 
 void MenuEntry::onRender(Render& render, size_t x, size_t& y)
