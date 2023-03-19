@@ -14,6 +14,9 @@ void TabbedView::prepareTab(const std::string& name, Widget& widget)
 
 	if(selected) selected->hide();
 	selected = &widget;
+
+	if(onSwitchTab)
+		onSwitchTab(*selected);
 }
 
 void TabbedView::switchTab(size_t index)
@@ -27,6 +30,9 @@ void TabbedView::switchTab(size_t index)
 		newSelected->show();
 
 		selected = newSelected;
+
+		if(onSwitchTab)
+			onSwitchTab(*selected);
 	}
 }
 

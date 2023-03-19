@@ -17,6 +17,8 @@ int main()
 	auto& tabs = ui.add <Termos::TabbedView> (); 
 
 	auto& menu = tabs.tab <Termos::Menu> ("test1");
+	auto& logger1 = tabs.tab <Termos::Logger> ("test2");
+
 	auto& menu1 = menu.addMenu("test menu 1");
 	auto& toggle1_1 = menu1.addToggle("(t1) inside 1");
 	auto& menu1_1 = menu1.addMenu("(m1) inside 1");
@@ -29,6 +31,8 @@ int main()
 	DBG_LOG("menu1", &menu1);
 	DBG_LOG("menu2", &menu2);
 
+	logger1.add("moi");
+
 	menu.onSelect = [&menu1, &menu2](Termos::MenuEntry& entry)
 	{
 		auto* relative = entry.findParent(0);
@@ -38,6 +42,11 @@ int main()
 
 		if(relative == &menu2)
 			DBG_LOG("Inside menu2");
+	};
+
+	tabs.onSwitchTab = [](Termos::Widget& widget)
+	{
+		DBG_LOG("Switch tab to", &widget);
 	};
 
 	ui.run();

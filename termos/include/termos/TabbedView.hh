@@ -4,6 +4,7 @@
 #include "TabSelector.hh"
 #include "View.hh"
 
+#include <functional>
 #include <string>
 
 namespace Termos {
@@ -22,6 +23,8 @@ public:
 
 	template <typename T, typename... Args>
 	T& add(Args&& ...args) = delete;
+
+	std::function <void(Widget&)> onSwitchTab;
 
 private:
 	void prepareTab(const std::string& name, Widget& widget);
