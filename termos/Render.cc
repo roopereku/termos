@@ -138,7 +138,12 @@ void Render::character(char ch, unsigned x, unsigned y)
 
 void Render::blankLine(unsigned y)
 {
-	mvwprintw(widget->window, y + 1, 1, "%*c", widget->getSize().x, ' ');
+	blankLine(0, y, widget->getSize().x);
+}
+
+void Render::blankLine(unsigned x, unsigned y, unsigned length)
+{
+	mvwprintw(widget->window, y + 1, x + 1, "%*c", length, ' ');
 }
 
 void Render::verticalLine(unsigned x, unsigned y, unsigned length)

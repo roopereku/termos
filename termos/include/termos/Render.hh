@@ -22,7 +22,9 @@ public:
 	void text(const std::string& str, unsigned x, unsigned y, unsigned maxLength = 0);
 
 	void character(char ch, unsigned x, unsigned y);
+
 	void blankLine(unsigned y);
+	void blankLine(unsigned x, unsigned y, unsigned length);
 
 	void verticalLine(unsigned x, unsigned y, unsigned length);
 	void horizontalLine(unsigned x, unsigned y, unsigned length);
