@@ -14,6 +14,8 @@ public:
 	TabSelector();
 
 	void add(const std::string& name);
+	void select(size_t index);
+	size_t getTabCount();
 
 	void onRender(Render& render) override;
 	void onMouseClick(Point at) override;
