@@ -11,12 +11,15 @@ TabbedView::TabbedView() : View(Split::Vertically), tabs(View::add <TabSelector>
 void TabbedView::prepareTab(const std::string& name, Widget& widget)
 {
 	tabs.add(name);
+	tabs.select(tabs.getTabCount() - 1);
 
 	if(selected) selected->hide();
 	selected = &widget;
 
 	if(onSwitchTab)
 		onSwitchTab(*selected);
+
+	render();
 }
 
 void TabbedView::switchTab(size_t index)
