@@ -17,6 +17,9 @@ const char* Submenu::getPrefix()
 void Submenu::onTrigger()
 {
 	expanded = !expanded;
+
+	if(expanded && onExpand)
+		onExpand();
 }
 
 bool Submenu::isSelectionHere()

@@ -4,6 +4,7 @@
 #include "MenuEntry.hh"
 #include "MenuToggle.hh"
 
+#include <functional>
 #include <vector>
 #include <string>
 #include <memory>
@@ -24,6 +25,8 @@ public:
 
 	Submenu& addMenu(const std::string& name, bool expanded = false) { return add <Submenu> (name, expanded); }
 	MenuToggle& addToggle(const std::string& name, bool on = false) { return add <MenuToggle> (name, on); }
+
+	std::function <void()> onExpand;
 
 protected:
 	void onRender(Render& render, size_t x, size_t& y) override;

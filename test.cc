@@ -33,10 +33,16 @@ int main()
 	auto& test = menu.add <Test> ("root", 5);
 
 	auto& text = right.add <Termos::TextInput> ();
+
 	text.onSubmit = [&text, &test](const std::string& value)
 	{
-		test.addMenu("new menu");
+		auto& t = test.addMenu("new menu");
 		text.clear();
+
+		t.onExpand = []()
+		{
+			DBG_LOG("new menu expanded");
+		};
 	};
 
 	ui.run();
