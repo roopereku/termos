@@ -96,8 +96,6 @@ Menu::Menu() : Submenu("")
 	menu = this;
 	expanded = true;
 	MenuEntry::parent = nullptr;
-
-	DBG_LOG("menu this", this);
 }
 
 MenuEntry& Menu::getSelection()

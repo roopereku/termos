@@ -38,6 +38,8 @@ protected:
 
 private:
 	void prepareEntry();
+	void lateInitialize();
+
 	std::vector <std::shared_ptr <MenuEntry>> entries;
 };
 }

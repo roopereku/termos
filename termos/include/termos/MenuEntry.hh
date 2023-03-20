@@ -24,7 +24,7 @@ protected:
 	virtual const char* getPrefix()=0;
 
 	Submenu* parent;
-	Menu* menu;
+	Menu* menu = nullptr;
 	int depth;
 
 private:

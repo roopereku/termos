@@ -1,4 +1,5 @@
 #include <termos/Submenu.hh>
+#include <termos/Debug.hh>
 #include <termos/Menu.hh>
 
 namespace Termos {
@@ -32,11 +33,43 @@ bool Submenu::isSelectionHere()
 	return false;
 }
 
+void Submenu::lateInitialize()
+{
+	for(auto& entry : entries)
+	{
+		entry->menu = menu;
+		entry->parent = parent;
+		entry->depth = depth + 1;
+
+		if(entry->isSubmenu())
+		{
+			Submenu& sub = static_cast <Submenu&> (*entry);
+			sub.lateInitialize();
+		}
+	}
+}
+
 void Submenu::prepareEntry()
 {
+	/* If there's no menu yet but entries have been added,
+	 * do nothing yet. This can happen if a custom submenu adds
+	 * entries in it's constructor */
+	if(!menu && !entries.empty())
+		return;
+
 	entries.back()->menu = menu;
 	entries.back()->parent = this;
 	entries.back()->depth = depth + 1;
+
+	if(entries.back()->isSubmenu())
+	{
+		Submenu& sub = static_cast <Submenu&> (*entries.back());
+
+		/* If the entry that was just initialized already has children,
+		 * initialize the children now */
+		if(!sub.entries.empty())
+			sub.lateInitialize();
+	}
 
 	// If this is the menu and it just got it's first entry, select said entry
 	if(this == menu && entries.size() == 1)
