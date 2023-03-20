@@ -24,6 +24,8 @@ public:
 	void show();
 	void hide();
 
+	Size getSize();
+
 	// Termos and View needs direct access to window
 	friend class ::TermosUI;
 	friend class View;
@@ -38,7 +40,6 @@ protected:
 	virtual void onResize() {};
 
 	void limitMaximumSize(unsigned limit);
-	Size getSize();
 
 private:
 	virtual void renderAll();

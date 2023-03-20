@@ -10,7 +10,7 @@
 class Test : public Termos::Submenu
 {
 public:
-	Test(const std::string& n, int ttl) : Termos::Submenu(n)
+	Test(const std::string& n, int ttl) : Termos::Submenu(n, true)
 	{
 		if(ttl == 0)
 			return;
@@ -30,7 +30,7 @@ int main()
 	auto& right = ui.add <Termos::View> (Termos::Split::Vertically);
 
 	auto& menu = right.add <Termos::Menu> ();
-	auto& test = menu.add <Test> ("root", 5);
+	auto& test = menu.add <Test> ("root", 80);
 
 	auto& text = right.add <Termos::TextInput> ();
 
@@ -38,11 +38,6 @@ int main()
 	{
 		auto& t = test.addMenu("new menu");
 		text.clear();
-
-		t.onExpand = []()
-		{
-			DBG_LOG("new menu expanded");
-		};
 	};
 
 	ui.run();

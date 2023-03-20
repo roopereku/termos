@@ -27,6 +27,9 @@ Submenu* MenuEntry::findParent(int depth)
 
 void MenuEntry::onRender(Render& render, size_t x, size_t& y)
 {
+	if(y >= menu->getSize().y)
+		return;
+
 	if(name.empty())
 		return;
 
