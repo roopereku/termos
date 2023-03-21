@@ -28,6 +28,9 @@ public:
 
 	std::function <void()> onExpand;
 
+	size_t entryCount() { return entries.size(); }
+	MenuEntry& operator[](size_t index) { return *entries[index]; }
+
 protected:
 	void onRender(Render& render, size_t x, size_t& y) override;
 	const char* getPrefix() override;
