@@ -33,6 +33,12 @@ void Widget::renderAll()
 	renderSelf();
 }
 
+void Widget::updateNext(double delta)
+{
+	if(next)
+		next->onUpdate(delta);
+}
+
 Size Widget::getSize()
 {
 	return Size(

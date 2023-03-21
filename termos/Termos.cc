@@ -1,9 +1,11 @@
 #include <termos/Termos.hh>
 #include <termos/Debug.hh>
 
+#include <thread>
+
 TermosUI::TermosUI(Termos::Split direction) : View(direction)
 {
-	Termos::Widget::window = initscr();
+	window = initscr();
 	start_color();
 
 	size = Size(COLS, LINES);
@@ -17,6 +19,9 @@ TermosUI::TermosUI(Termos::Split direction) : View(direction)
 	// Enable arrow keys, resize events and mouse events
 	keypad(window, true);
 	mousemask(BUTTON1_PRESSED | BUTTON2_PRESSED, NULL);
+
+	// Make getch non-blocking
+	nodelay(window, true);
 }
 
 TermosUI::~TermosUI()
@@ -24,10 +29,11 @@ TermosUI::~TermosUI()
 	endwin();
 }
 
-void TermosUI::run()
+void TermosUI::run(unsigned delayMs)
 {
 	renderAll();
 	bool running = true;
+	previous = std::chrono::high_resolution_clock::now();
 
 	while(running)
 	{
@@ -86,5 +92,19 @@ void TermosUI::run()
 					focused->onKeyPress(key);
 			}
 		}
+
+		auto now = std::chrono::high_resolution_clock::now();
+
+		// What's the difference between previous and now in milliseconds
+		using ms = std::chrono::duration<float, std::milli>;
+		auto delta = std::chrono::duration_cast <ms> (now - previous).count();
+
+		// Update all widgets. Delta is divided by 1000 to make 100 ms look like 0.1s
+		onUpdate(delta / 1000);
+
+		// Sleep for the given amount to reduce CPU usage
+		std::this_thread::sleep_for(std::chrono::milliseconds(delayMs));
+
+		previous = now;
 	}
 }

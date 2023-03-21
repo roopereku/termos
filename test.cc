@@ -7,17 +7,21 @@
 #include <termos/Debug.hh>
 #include <termos/Menu.hh>
 
-class Test : public Termos::Submenu
+class Test : public Termos::Widget
 {
 public:
-	Test(const std::string& n, int ttl) : Termos::Submenu(n, true)
+	void onUpdate(double delta) override
 	{
-		if(ttl == 0)
-			return;
-
-		ttl--;
-		add <Test> ("moi" + std::to_string(ttl), ttl);
+		elapsed += delta;
+		if(elapsed >= 1)
+		{
+			DBG_LOG("Update test");
+			elapsed = 0;
+		}
 	}
+
+private:
+	double elapsed = 0;
 };
 
 int main()
@@ -28,17 +32,7 @@ int main()
 	Termos::setDebugLogger(logger);
 
 	auto& right = ui.add <Termos::View> (Termos::Split::Vertically);
-
-	auto& menu = right.add <Termos::Menu> ();
-	auto& test = menu.add <Test> ("root", 80);
-
-	auto& text = right.add <Termos::TextInput> ();
-
-	text.onSubmit = [&text, &test](const std::string& value)
-	{
-		auto& t = test.addMenu("new menu");
-		text.clear();
-	};
+	auto& test = right.add <Test> ();
 
 	ui.run();
 }

@@ -59,6 +59,17 @@ void View::resizeChildren()
 		firstChild->resize();
 }
 
+void View::onUpdate(double delta)
+{
+	if(firstChild)
+	{
+		firstChild->onUpdate(delta);
+		firstChild->updateNext(delta);
+	}
+
+	// updateNext isn't needed here because the root View shouldn't have a "next"
+}
+
 Widget* View::findMouseDestination(Point point)
 {
 	// If the mouse is inside this view, check if the user clicked on a child widget

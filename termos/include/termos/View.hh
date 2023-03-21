@@ -36,6 +36,8 @@ protected:
 	void renderAll() override;
 	void resizeChildren();
 
+	void onUpdate(double delta) override;
+
 	Widget* findMouseDestination(Point point) override;
 	Widget& addNextChild(const std::shared_ptr <Widget>& widget);
 	Widget* findChild(size_t index);

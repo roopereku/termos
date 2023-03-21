@@ -36,12 +36,15 @@ protected:
 
 	virtual void onRender(Render& render) {};
 	virtual void onMouseClick(Point at) {};
+	virtual void onUpdate(double delta) {}
 	virtual void onKeyPress(int key) {};
 	virtual void onResize() {};
 
 	void limitMaximumSize(unsigned limit);
 
 private:
+	void updateNext(double delta);
+
 	virtual void renderAll();
 	void renderSelf();
 
