@@ -7,23 +7,6 @@
 #include <termos/Debug.hh>
 #include <termos/Menu.hh>
 
-class Test : public Termos::Widget
-{
-public:
-	void onUpdate(double delta) override
-	{
-		elapsed += delta;
-		if(elapsed >= 1)
-		{
-			DBG_LOG("Update test");
-			elapsed = 0;
-		}
-	}
-
-private:
-	double elapsed = 0;
-};
-
 int main()
 {
 	TermosUI ui(Termos::Split::Horizontally);
@@ -31,8 +14,15 @@ int main()
 	auto& logger = ui.add <Termos::Logger> ();
 	Termos::setDebugLogger(logger);
 
-	auto& right = ui.add <Termos::View> (Termos::Split::Vertically);
-	auto& test = right.add <Test> ();
+	auto& menu = ui.add <Termos::Menu> ();
+	auto& test = menu.addMenu("no color");
+	auto& red = menu.addMenu("red");
+	auto& green = menu.addToggle("green");
+	auto& blue = menu.addMenu("blue");
+
+	red.setHighlight(Termos::Color::Red);
+	green.setHighlight(Termos::Color::Green);
+	blue.setHighlight(Termos::Color::Blue);
 
 	ui.run();
 }

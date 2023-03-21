@@ -36,6 +36,9 @@ public:
 	void setForeground(Color foreground);
 	void setBackground(Color background);
 
+	Color getForegroundColor() { return fg; }
+	Color getBackgroundColor() { return bg; }
+
 	// Only Widget has access to the constructor
 	friend class Widget;
 

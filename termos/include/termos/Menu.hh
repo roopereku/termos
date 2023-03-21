@@ -23,6 +23,7 @@ public:
 	std::function <void(MenuEntry&)> onSelect;
 
 	friend class Submenu;
+	friend class MenuEntry;
 
 private:
 	MenuEntry* selected = this;

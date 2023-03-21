@@ -18,6 +18,9 @@ public:
 
 	Submenu* findParent(int depth);
 
+	void setHighlight(Color color);
+	void removeHighlight();
+
 	friend class Submenu;
 
 protected:
@@ -28,6 +31,9 @@ protected:
 	int depth;
 
 private:
+	Color highlight;
+	bool hasHighlight = false;
+
 	const std::string name;
 	virtual void onRender(Render& render, size_t x, size_t& y);
 };
